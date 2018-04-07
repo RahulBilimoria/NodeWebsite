@@ -1,0 +1,27 @@
+mixin navigation(active)
+    nav(class="navbar navbar-inverse")
+        div(class="container-fluid")
+            div(class="collapse navbar-collapse" id="myNavbar")
+                ul(class="nav navbar-nav")
+                    case active
+                        when 0
+                            li(class="active")
+                                a(href="/") Home
+                            li
+                                a(href="/about") About
+                            li
+                                a(href="/random") Projects
+                        when 1
+                            li
+                                a(href="/") Home
+                            li(class="active")
+                                a(href="/about") About
+                            li
+                                a(href="/random") Projects
+                        when 2
+                            li
+                                a(href="/") Home
+                            li
+                                a(href="/about") About
+                            li(class="active")
+                                a(href="/random") Projects

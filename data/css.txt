@@ -1,0 +1,171 @@
+.fixed {
+    left: 1%;
+    position: fixed;
+    top: 185px;
+    background-color: #EEE;
+    width: 200px;
+    height: 50%;
+    border-radius: 25px;
+}
+.article {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(51,122,183);
+    border-radius: 20px;
+    margin: 15px 85px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+.footerInfo {
+    width: 250px;
+    margin: 0 auto;
+    background-color: #DDD;
+    border-radius: 25px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+.aboutMe {
+    margin-top: 100px;
+    border-style:ridge;
+    border-radius: 25px;
+    border-color: #000;
+    background-color:floralwhite
+}
+.navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+}
+.row.content {
+    height: 450px;
+}
+.icon {
+    height: 50px;
+    width: 50px;
+}
+.sidenavbar {
+    list-style: none;
+    padding: 0;
+}
+.sidenavbar li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+@media screen and (max-width: 767px) {
+    .row.content {
+        height:auto;
+    } 
+}
+As you can see i have put a picture of myself here and it is an amazing picture there is no other picture greater than the one put here
+extends parent.pug
+
+block nav
+    +navigation(2)
+    
+block content
+    div(class="container-fluid text-center")
+        div(class="row")
+            +webpage(articletitle1, articledata1, "col-lg-12", "article1")
+var http = require('http');
+var express = require('express');
+var pug = require('pug');
+var fileSys = require('fs');
+var app = express();
+
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+app.use(express.static('public'));
+
+app.get('/', function(request, response){
+    response.render('index', {
+        articletitle1: "Tacos",
+        articledata1: fileSys.readFileSync('./data/taco.txt'),
+        articletitle2: "Burritos",
+        articledata2: fileSys.readFileSync('./data/burrito.txt'),
+        articletitle3: "Quesadillas",
+        articledata3: fileSys.readFileSync('./data/quesadilla.txt')
+    });
+});
+app.get('/random', function(request, response){
+    response.render('random', {
+        articletitle1: "My Code",
+        articledata1: fileSys.readFileSync('./data/css.txt')
+    });
+});
+app.get('/about', function(request, response){
+    response.render('about', {
+        articletitle1: "About me",
+        articledata1: fileSys.readFileSync('./data/me.txt'),
+        articledata2: fileSys.readFileSync('./data/alsome.txt'),
+        articledata3: fileSys.readFileSync('./data/me2.txt')
+    });
+});
+
+app.listen(8080);
+
+console.log('Server running at http://127.0.0.1:8080/');
+extends parent.pug
+
+block nav
+    +navigation(1)
+    
+block content
+    div(class="container-fluid text-center")
+        div(class="row")
+            +webpage(articletitle1, articledata1, "col-sm-10 article", "article1")
+        div(class="row")
+            +webpage(" ", articledata2, "col-sm-4 aboutMe", "article2")
+            div(class="col-lg-4")
+                img(src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Rahul_Gandhi_1.jpg/220px-Rahul_Gandhi_1.jpg" atl="Rahul")
+            +webpage(" ", articledata3, "col-sm-4 aboutMe", "article3")
+footer(class="footerInfo")
+    ul(class="nav navbar-nav")
+        li
+            a(href="http://www.wikipedia.com")
+                img(class="icon" src="/icons/wikipedia-icon.png")
+        li
+            a(href="http://www.linkedin.com")
+                img(class="icon" src="/icons/linkedin-icon.png")
+        li
+            a(href="http://www.facebook.com")
+                img(class="icon" src="/icons/facebook-icon.png")
+    p Email: RahulBilimoria1@gmail.com
+    p Rahul Bilimoria Copyright © 2017
+mixin sidebar(link1, link2, link3)
+    div(class="col-sm-2")
+        div(class="fixed")
+            h3 Navigation
+            ul(class="sidenavbar")
+                li
+                    a(href="#article1" class="btn btn-primary" role="button") #{link1}
+                li
+                    a(href="#article2" class="btn btn-primary" role="button") #{link2}
+                li
+                    a(href="#article3" class="btn btn-primary" role="button") #{link3}
+mixin webpage(title, name, myClass, myId)
+    div(class=myClass id=myId)
+        h2=title
+        p=name
+extends parent.pug
+include sidenav
+
+block nav
+    +navigation(0)
+
+block content
+    div(class="container-fluid text-center")
+        div(class="row")
+            h1 My Homepage
+            hr
+        div(class="row")
+            +sidebar(articletitle1, articletitle2, articletitle3)
+            div(class="col-sm-10")
+                +webpage(articletitle1, articledata1, "col-lg-10 article", "article1")
+                div(class="col-sm-12")
+                    hr
+                +webpage(articletitle2, articledata2, "col-lg-10 article", "article2")
+                div(class="col-sm-12")
+                    hr
+                +webpage(articletitle3, articledata3, "col-lg-10 article", "article3")
+                div(class="col-sm-12")
+                    hr

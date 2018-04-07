@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        include head.pug
+    body
+        include navigation.pug
+        block nav
+            +navigation(0)
+        include article.pug
+        block content
+            +webpage("test")
+        include footer.pug
+    
